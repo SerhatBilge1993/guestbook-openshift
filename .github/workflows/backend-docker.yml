@@ -13,7 +13,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write   # <- viktigt för GHCR
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -31,4 +31,5 @@ jobs:
         with:
           context: ./guestbook-backend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/guestbook-backend:latest
+          tags: |
+            ghcr.io/serhatbilge1993/guestbook-backend:latest
