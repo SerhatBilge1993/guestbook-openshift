@@ -2,30 +2,33 @@ name: Build and push backend image
 
 on:
   push:
-    # kör på alla branches, inga filter
+    branches: [ "main" ]
     paths:
-      - 'guestbook-backend/**'
-      - '.github/workflows/backend-docker.yml'
+      - "guestbook-backend/**"
+      - ".github/workflows/backend-docker.yml"
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write   # <- viktigt för GHCR
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push backend image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
           context: ./guestbook-backend
           push: true
-          tags: |
-            serhatbilge/guestbook-backend:github
-            serhatbilge/guestbook-backend:latest
+          tags: ghcr.io/${{ github.repository_owner }}/guestbook-backend:latest
