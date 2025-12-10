@@ -2,7 +2,7 @@ name: Build and push backend image
 
 on:
   push:
-    branches: [ master ]
+    # kör på alla branches, inga filter
     paths:
       - 'guestbook-backend/**'
       - '.github/workflows/backend-docker.yml'
