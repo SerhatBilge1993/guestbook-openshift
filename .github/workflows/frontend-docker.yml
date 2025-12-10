@@ -31,4 +31,5 @@ jobs:
         with:
           context: ./guestbook-frontend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/guestbook-frontend:latest
+          tags: |
+            ghcr.io/serhatbilge1993/guestbook-frontend:latest
