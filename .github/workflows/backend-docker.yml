@@ -1,0 +1,31 @@
+name: Build and push backend image
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'guestbook-backend/**'
+      - '.github/workflows/backend-docker.yml'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./guestbook-backend
+          push: true
+          tags: |
+            serhatbilge/guestbook-backend:github
+            serhatbilge/guestbook-backend:latest
