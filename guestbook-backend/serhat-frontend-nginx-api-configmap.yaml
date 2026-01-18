@@ -3,12 +3,45 @@ kind: ConfigMap
 metadata:
   name: serhat-frontend-nginx-api
 data:
-  serhat-api.conf: |
-    location /api/ {
-      rewrite ^/api/(.*)$ /$1 break;
-      proxy_pass http://serhat-backend:8080;
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
+  nginx.conf: |
+    worker_processes auto;
+    error_log /dev/stderr notice;
+
+    events {
+      worker_connections 1024;
+    }
+
+    http {
+      access_log /dev/stdout;
+
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+
+      resolver dns-default.openshift-dns.svc.cluster.local valid=30s;
+      resolver_timeout 5s;
+
+      upstream backend {
+        server backend:8080;
+      }
+
+      server {
+        listen 8080;
+        server_name _;
+
+        root /opt/app-root/src;
+        index index.html;
+
+        location / {
+          try_files $uri $uri/ /index.html;
+        }
+
+        location /api/ {
+          rewrite ^/api/(.*)$ /$1 break;
+          proxy_pass http://backend;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        }
+      }
     }
