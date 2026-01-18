@@ -28,11 +28,11 @@ spec:
               cpu: "200m"
               memory: "256Mi"
           volumeMounts:
-            - name: nginx-api-conf
-              mountPath: /opt/app-root/etc/nginx.default.d/serhat-api.conf
-              subPath: serhat-api.conf
+            - name: nginx-conf
+              mountPath: /opt/app-root/etc/nginx/nginx.conf
+              subPath: nginx.conf
               readOnly: true
       volumes:
-        - name: nginx-api-conf
+        - name: nginx-conf
           configMap:
             name: serhat-frontend-nginx-api
