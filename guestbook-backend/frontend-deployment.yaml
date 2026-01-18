@@ -15,16 +15,15 @@ spec:
         app: serhat-frontend
     spec:
       containers:
-  - name: frontend
-    image: serhatbilge/guestbook-frontend:2
-    imagePullPolicy: Always
-    ports:
-      - containerPort: 8080
-    resources:
-      requests:
-        cpu: "50m"
-        memory: "64Mi"
-      limits:
-        cpu: "200m"
-        memory: "256Mi"
-
+        - name: frontend
+          image: serhatbilge/guestbook-frontend:2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
