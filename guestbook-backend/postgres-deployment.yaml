@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: serhat-postgres
   labels:
-    app: postgres
+    app: serhat-postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: serhat-postgres
   template:
     metadata:
       labels:
-        app: postgres
+        app: serhat-postgres
     spec:
       containers:
         - name: postgres
@@ -30,17 +30,17 @@ spec:
             - name: POSTGRESQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: serhat-postgres-secret
                   key: POSTGRESQL_USER
             - name: POSTGRESQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: serhat-postgres-secret
                   key: POSTGRESQL_PASSWORD
             - name: POSTGRESQL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: serhat-postgres-secret
                   key: POSTGRESQL_DATABASE
           volumeMounts:
             - name: postgres-data
@@ -48,5 +48,4 @@ spec:
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: postgres-pvc
-
+            claimName: serhat-postgres-pvc
