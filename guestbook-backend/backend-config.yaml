@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: backend-config
+  name: serhat-backend-config
 data:
-  DB_HOST: "postgres"
+  DB_HOST: "serhat-postgres"
   DB_PORT: "5432"
   DB_USER: "guestbook"
   DB_NAME: "guestbook"
