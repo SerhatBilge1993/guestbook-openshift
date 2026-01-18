@@ -1,16 +1,18 @@
-FROM registry.access.redhat.com/ubi10/go-toolset:10.0 AS builder
-USER 0
-WORKDIR /opt/app-root/src
+FROM golang:1.22-alpine AS builder
 
+WORKDIR /src
 COPY go.mod ./
-COPY main.go ./
-RUN go mod tidy
-RUN go build -o guestbook-api .
+RUN go mod download
 
-FROM registry.access.redhat.com/ubi10-minimal:10.0
-WORKDIR /opt/app-root/src
-COPY --from=builder /opt/app-root/src/guestbook-api /opt/app-root/src/guestbook-api
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /app/guestbook-api .
 
-ENV PORT=8080
+FROM alpine:3.20
+
+RUN adduser -D -u 10001 app
+WORKDIR /
+COPY --from=builder /app/guestbook-api /guestbook-api
+
+USER 10001
 EXPOSE 8080
-CMD ["/opt/app-root/src/guestbook-api"]
+ENTRYPOINT ["/guestbook-api"]
