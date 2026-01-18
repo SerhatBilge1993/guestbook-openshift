@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: serhatbilge/guestbook-backend:1
+          image: ghcr.io/serhatbilge1993/guestbook-backend:latest
           ports:
             - containerPort: 8080
           resources:
