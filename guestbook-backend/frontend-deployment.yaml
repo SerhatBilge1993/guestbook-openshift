@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: serhat-frontend
   labels:
-    app: frontend
+    app: serhat-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: serhat-frontend
   template:
     metadata:
       labels:
-        app: frontend
+        app: serhat-frontend
     spec:
       containers:
         - name: frontend
