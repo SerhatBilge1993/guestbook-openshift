@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: serhat-frontend
 spec:
   selector:
-    app: frontend
+    app: serhat-frontend
   ports:
     - port: 8080
       targetPort: 8080
