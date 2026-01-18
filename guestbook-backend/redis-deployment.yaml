@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis
+  name: serhat-redis
   labels:
-    app: redis
+    app: serhat-redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
+      app: serhat-redis
   template:
     metadata:
       labels:
-        app: redis
+        app: serhat-redis
     spec:
       containers:
         - name: redis
@@ -30,7 +30,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: redis-secret
+                  name: serhat-redis-secret
                   key: REDIS_PASSWORD
           volumeMounts:
             - name: redis-data
@@ -38,4 +38,4 @@ spec:
       volumes:
         - name: redis-data
           persistentVolumeClaim:
-            claimName: redis-pvc
+            claimName: serhat-redis-pvc
