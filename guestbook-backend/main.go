@@ -90,7 +90,7 @@ func main() {
 	r.HandleFunc("/api/stats", app.statsHandler).Methods("GET")
 
 	port := getEnv("PORT", "8080")
-	log.Printf("🚀 Server startar på port %s", port)
+	log.Printf("🚀 Serhat Guestbook API startar på port %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
