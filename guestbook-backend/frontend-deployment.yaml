@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: serhatbilge/guestbook-frontend:2
+          image: serhatbilge/guestbook-frontend:3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
